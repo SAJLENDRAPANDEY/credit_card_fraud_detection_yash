@@ -1,0 +1,51 @@
+[theme]
+primaryColor = "#0066FF"
+backgroundColor = "#0F1419"
+secondaryBackgroundColor = "#1a1f2e"
+textColor = "#E0E6ED"
+font = "sans serif"
+
+[client]
+showErrorDetails = true
+logger.level = "info"
+showSidebarNavigation = true
+toolbarMode = "developer"
+maxUploadSize = 200
+
+[server]
+port = 8501
+headless = true
+runOnSave = true
+maxUploadSize = 200
+enableCORS = true
+enableXsrfProtection = true
+logger.level = "info"
+
+[logger]
+level = "info"
+messageFormat = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+[browser]
+gatherUsageStats = false
+serverAddress = "localhost"
+serverPort = 8501
+
+[mapbox]
+token = ""
+
+[client]
+logLevel = "info"
+
+[s3]
+bucket = ""
+url = ""
+accessKeyId = ""
+secretAccessKey = ""
+region = ""
+requireSSL = true
+
+[database]
+URL = ""
+
+[advanced]
+protobufVersion = "3"

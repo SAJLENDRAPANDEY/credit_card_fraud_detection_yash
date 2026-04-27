@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  fraud-detection:
+    # Build from Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # Container name
+    container_name: fraud-detection-app
+    
+    # Port mapping
+    ports:
+      - "8501:8501"
+    
+    # Environment variables
+    environment:
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_LOGGER_LEVEL=info
+      - PYTHONUNBUFFERED=1
+    
+    # Volume mounting
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Network
+    networks:
+      - fraud-detection-network
+
+# Network configuration
+networks:
+  fraud-detection-network:
+    driver: bridge
+
+# Volumes for data persistence
+volumes:
+  fraud-detection-data:
+    driver: local
